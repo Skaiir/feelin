@@ -830,7 +830,7 @@ function evalNode(node: SyntaxNodeRef, input: string, args: any[]) {
           return null;
         }
 
-        if (typeof test === 'boolean') {
+        if (typeof test === 'boolean' && !(typeof value === 'boolean')) {
           return test;
         }
 

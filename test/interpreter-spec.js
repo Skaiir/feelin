@@ -850,6 +850,26 @@ describe('interpreter', function() {
 
   describe('unaryTest', function() {
 
+    unary(false, 'false', true);
+
+    unary(false, 'true', false);
+
+    unary(true, 'true', true);
+
+    unary(true, 'false', false);
+
+    unary(true, '3 > 1', true);
+
+    unary(true, '3 < 1', false);
+
+    unary(false, '3 > 1', false);
+
+    unary(false, '3 < 1', true);
+
+    unarySkip(true, '-', true);
+
+    unarySkip(false, '-', true);
+
     unary(0, '< 5', true);
 
     unary(5, '>= 10', false);
@@ -884,7 +904,7 @@ describe('interpreter', function() {
     unary(5, '? * 2 = 10', true);
 
 
-    describe('Interval', function() {
+    describe('interval', function() {
 
       unary(4, '[4..6]', true);
       unary(6, '[4..6]', true);
@@ -1277,7 +1297,6 @@ function createUnaryVerifier(options) {
 }
 
 function expr(...args) {
-
   return createExprVerifier({
     it,
     args
@@ -1302,6 +1321,13 @@ function exprSkip(...args) {
   });
 }
 
+function unary(...args) {
+  return createUnaryVerifier({
+    args,
+    it
+  });
+}
+
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function unaryOnly(...args) {
@@ -1311,10 +1337,11 @@ function unaryOnly(...args) {
   });
 }
 
-function unary(...args) {
-
+// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function unarySkip(...args) {
   return createUnaryVerifier({
     args,
-    it
+    it: it.skip
   });
 }
